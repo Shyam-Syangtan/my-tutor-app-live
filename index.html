@@ -12,7 +12,7 @@
     <!-- Google Sign-In (handled by Supabase) -->
 
     <!-- Custom Styles -->
-  <link rel="stylesheet" crossorigin href="/my-tutor-app-live/assets/styles-DtlC7v4x.css">
+  <link rel="stylesheet" crossorigin href="/assets/styles-DtlC7v4x.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -23,7 +23,7 @@
                     <a href="#" class="nav-logo">IndianTutors</a>
                 </div>
                 <div class="nav-right nav-links">
-                    <a href="#teachers" class="nav-link">Find a Teacher</a>
+                    <a href="findteacher.html" class="nav-link">Find a Teacher</a>
                     <button class="btn btn-primary nav-btn login-btn" onclick="openLoginModal()">Log in</button>
                 </div>
             </div>
@@ -229,7 +229,7 @@
                 const { data, error } = await supabase.auth.signInWithOAuth({
                     provider: 'google',
                     options: {
-                        redirectTo: `${window.location.origin}/my-tutor-app-live/home.html`
+                        redirectTo: `${window.location.origin}/home.html`
                     }
                 });
 
