@@ -2,8 +2,8 @@
 import { createClient } from '@supabase/supabase-js'
 
 // Initialize Supabase client
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://sprlwkfpreajsodowyrs.supabase.co'
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNwcmx3a2ZwcmVhanNvZG93eXJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk5Njc4NjIsImV4cCI6MjA2NTU0Mzg2Mn0.9asEwbT40SPv_FBxUqm_7ON2CCuRZc2iEmDRiYK5n8k'
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://qbyyutebrgpxngvwenkd.supabase.co'
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFieXl1dGVicmdweG5ndndlbmtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MTA1NTMsImV4cCI6MjA2NTI4NjU1M30.eO8Wd0ZOqtXgvQ3BuedmSPmYVpbG3V-AXvgufLns6yY'
 
 if (!supabaseUrl || !supabaseKey) {
     throw new Error('Missing Supabase environment variables. Please check your .env file.')
