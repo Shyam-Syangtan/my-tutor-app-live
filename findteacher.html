@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Teacher - IndianTutors</title>
+    <meta name="description" content="Find the perfect Indian language tutor for your learning journey">
+    
+    <!-- Responsive Global CSS with Teal Professional Theme -->
+    <link rel="stylesheet" href="responsive-global.css?v=14&t=20250614-refined-design">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        /* Cache-bust: v14-20250614-refined-design - Force browser refresh for immediate updates */
+        body { font-family: 'Inter', sans-serif; }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Mobile Sidebar Styles */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100%;
+            background: white;
+            z-index: 1999;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+
+        .sidebar-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .sidebar-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .sidebar-user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .sidebar-name {
+            display: block;
+            font-weight: 600;
+            color: #111827;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .sidebar-email {
+            display: block;
+            font-size: 0.875rem;
+            color: #6b7280;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-content {
+            padding: 1rem 0;
+        }
+
+        .sidebar-section {
+            padding: 0 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            color: #6b7280;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .sidebar-link:hover {
+            background: #f3f4f6;
+            color: #111827;
+        }
+
+        .sidebar-link svg {
+            flex-shrink: 0;
+            color: #6b7280;
+            transition: color 0.2s ease;
+        }
+
+        .sidebar-link:hover svg {
+            color: #4CAF50;
+        }
+
+        .trial-link {
+            background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+            color: white !important;
+        }
+
+        .trial-link:hover {
+            background: linear-gradient(135deg, #45A049 0%, #2E7D32 100%);
+            color: white !important;
+        }
+
+        .trial-link svg {
+            color: white !important;
+        }
+
+        .trial-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .sidebar-divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 1rem 0;
+            border: none;
+        }
+
+        .logout-link {
+            color: #dc2626 !important;
+        }
+
+        .logout-link:hover {
+            background: rgba(220, 38, 38, 0.1) !important;
+            color: #dc2626 !important;
+        }
+
+        .logout-link svg {
+            color: #dc2626 !important;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.2s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .mobile-profile-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hidden-mobile {
+                display: none !important;
+            }
+
+            .nav-center {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .mobile-sidebar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Mobile Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Mobile Sidebar -->
+    <nav class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-profile">
+                <img src="" alt="Profile" class="sidebar-avatar" id="sidebarAvatar">
+                <div class="sidebar-user-info">
+                    <span class="sidebar-name" id="sidebarName">Loading...</span>
+                    <span class="sidebar-email" id="sidebarEmail">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-content">
+            <div class="sidebar-section">
+                <a href="findteacher.html" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    Find a Teacher
+                </a>
+                <a href="#group-class" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    Group Class
+                </a>
+                <a href="#trial" class="sidebar-link trial-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    <span>Start 30-Day Free Trial</span>
+                    <span class="trial-badge">Plus</span>
+                </a>
+                <a href="#community" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                    Community
+                </a>
+                <a href="#messages" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    Messages
+                </a>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <div class="sidebar-section">
+                <a href="#lessons" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    My Lessons
+                </a>
+                <a href="#teachers" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    My Teachers
+                </a>
+                <a href="#tests" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14,2 14,8 20,8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10,9 9,9 8,9"></polyline>
+                    </svg>
+                    My Tests
+                </a>
+                <a href="#quizzes" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    My Quizzes
+                </a>
+                <a href="#wallet" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="1" y="3" width="15" height="13"></rect>
+                        <polygon points="16,8 20,8 23,11 23,16 16,16"></polygon>
+                        <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                        <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                    </svg>
+                    My Wallet
+                </a>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <div class="sidebar-section">
+                <a href="#profile" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    My Profile
+                </a>
+                <a href="#settings" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    Settings
+                </a>
+                <button class="sidebar-link logout-link" onclick="handleLogout()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16,17 21,12 16,7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Desktop/Tablet Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <img src="" alt="Profile" class="mobile-profile-avatar" id="mobileProfileAvatar">
+                </button>
+
+                <!-- Logo -->
+                <div class="flex items-center nav-center md:relative md:left-auto md:transform-none">
+                    <a href="home.html" class="text-2xl font-bold" style="color: #00C2B3;">IndianTutors</a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="home.html" class="text-gray-600 hover:text-gray-900 transition-colors">Home</a>
+                    <a href="findteacher.html" class="font-medium" style="color: #00C2B3;">Find a Teacher</a>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" id="navSearch" placeholder="Search tutors..."
+                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent"
+                               style="--tw-ring-color: #00C2B3;">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Language Dropdown & User Menu -->
+                <div class="hidden-mobile flex items-center space-x-4">
+                    <!-- Language Dropdown -->
+                    <div class="relative">
+                        <select class="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 focus:ring-2 focus:border-transparent"
+                                style="--tw-ring-color: #00C2B3;">
+                            <option>English</option>
+                            <option>हिंदी</option>
+                            <option>தமிழ்</option>
+                        </select>
+                    </div>
+
+                    <!-- User Dropdown -->
+                    <div class="relative" id="userDropdown">
+                        <button class="flex items-center space-x-2 bg-white border border-gray-300 rounded-lg px-3 py-2 hover:bg-gray-50 transition-colors" id="userMenuButton">
+                            <img src="" alt="Profile" class="w-8 h-8 rounded-full" id="navUserAvatar">
+                            <span class="text-sm font-medium text-gray-700" id="navUserName">Loading...</span>
+                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown Menu -->
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 hidden" id="userDropdownMenu">
+                            <div class="py-1">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+                                <hr class="my-1">
+                                <button onclick="handleLogout()" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Find Your Perfect Language Tutor</h1>
+            <p class="text-gray-600">Choose from <span id="tutorCount" class="font-semibold" style="color: #00C2B3;">0</span> experienced tutors</p>
+        </div>
+
+        <!-- Filters -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+            <div class="flex flex-wrap gap-4 items-center">
+                <!-- Language Filter -->
+                <div class="flex flex-col">
+                    <label class="text-sm font-medium text-gray-700 mb-1">Language</label>
+                    <select id="languageFilter" class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:border-transparent"
+                            style="--tw-ring-color: #00C2B3;">
+                        <option value="">All Languages</option>
+                        <option value="Hindi">Hindi</option>
+                        <option value="Tamil">Tamil</option>
+                        <option value="Bengali">Bengali</option>
+                        <option value="Telugu">Telugu</option>
+                        <option value="Marathi">Marathi</option>
+                        <option value="Gujarati">Gujarati</option>
+                        <option value="Kannada">Kannada</option>
+                        <option value="Malayalam">Malayalam</option>
+                        <option value="Punjabi">Punjabi</option>
+                        <option value="Urdu">Urdu</option>
+                    </select>
+                </div>
+
+                <!-- Price Range -->
+                <div class="flex flex-col">
+                    <label class="text-sm font-medium text-gray-700 mb-1">Price Range</label>
+                    <select id="priceFilter" class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:border-transparent"
+                            style="--tw-ring-color: #00C2B3;">
+                        <option value="">Any Price</option>
+                        <option value="0-300">₹0 - ₹300</option>
+                        <option value="300-500">₹300 - ₹500</option>
+                        <option value="500-800">₹500 - ₹800</option>
+                        <option value="800-1200">₹800 - ₹1200</option>
+                        <option value="1200+">₹1200+</option>
+                    </select>
+                </div>
+
+                <!-- Search -->
+                <div class="flex flex-col flex-1 min-w-[200px]">
+                    <label class="text-sm font-medium text-gray-700 mb-1">Search Tutors</label>
+                    <input type="text" id="searchInput" placeholder="Search by name..." 
+                           class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:border-transparent"
+                           style="--tw-ring-color: #00C2B3;">
+                </div>
+
+                <!-- Clear Filters -->
+                <div class="flex flex-col justify-end">
+                    <button id="clearFilters" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">
+                        Clear All
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="text-center py-12">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto" style="border-color: #00C2B3;"></div>
+            <p class="text-gray-600 mt-4">Loading tutors...</p>
+        </div>
+
+        <!-- Tutors Grid -->
+        <div id="tutorsGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-6 hidden">
+            <!-- Tutor cards will be dynamically inserted here -->
+        </div>
+
+        <!-- No Results -->
+        <div id="noResults" class="text-center py-12 hidden">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33"></path>
+            </svg>
+            <h3 class="mt-2 text-sm font-medium text-gray-900">No tutors found</h3>
+            <p class="mt-1 text-sm text-gray-500">Try adjusting your filters or search terms.</p>
+        </div>
+    </main>
+
+    <script>
+        // Cache-bust: v14-20250614-refined-design - Force browser refresh for immediate updates
+        // Initialize Supabase
+        const supabaseUrl = 'https://qbyyutebrgpxngvwenkd.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFieXl1dGVicmdweG5ndndlbmtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MTA1NTMsImV4cCI6MjA2NTI4NjU1M30.eO8Wd0ZOqtXgvQ3BuedmSPmYVpbG3V-AXvgufLns6yY';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        let allTutors = [];
+        let filteredTutors = [];
+
+        // DOM Elements
+        const tutorsGrid = document.getElementById('tutorsGrid');
+        const loadingState = document.getElementById('loadingState');
+        const noResults = document.getElementById('noResults');
+        const tutorCount = document.getElementById('tutorCount');
+        const languageFilter = document.getElementById('languageFilter');
+        const priceFilter = document.getElementById('priceFilter');
+        const searchInput = document.getElementById('searchInput');
+        const navSearch = document.getElementById('navSearch');
+        const clearFilters = document.getElementById('clearFilters');
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', async () => {
+            await checkAuth();
+            await loadTutors();
+            setupEventListeners();
+            initializeMobileSidebar();
+        });
+
+        // Check authentication
+        async function checkAuth() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                window.location.href = 'index.html';
+                return;
+            }
+            displayUserInfo(session.user);
+        }
+
+        // Display user info in navigation
+        async function displayUserInfo(user) {
+            try {
+                const { data: studentData } = await supabase
+                    .from('students')
+                    .select('*')
+                    .eq('id', user.id)
+                    .single();
+
+                const userName = studentData?.name || user.email.split('@')[0];
+                const userEmail = studentData?.email || user.email;
+                const avatarUrl = studentData?.profile_picture || user.user_metadata?.avatar_url;
+
+                // Update desktop navigation
+                const navUserName = document.getElementById('navUserName');
+                const navUserAvatar = document.getElementById('navUserAvatar');
+
+                if (navUserName) navUserName.textContent = userName;
+
+                // Update mobile sidebar
+                const sidebarName = document.getElementById('sidebarName');
+                const sidebarEmail = document.getElementById('sidebarEmail');
+                const sidebarAvatar = document.getElementById('sidebarAvatar');
+                const mobileProfileAvatar = document.getElementById('mobileProfileAvatar');
+
+                if (sidebarName) sidebarName.textContent = userName;
+                if (sidebarEmail) sidebarEmail.textContent = userEmail;
+
+                // Set avatars
+                const defaultAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=6366f1&color=fff&size=40`;
+                const avatarToUse = avatarUrl || defaultAvatar;
+
+                if (navUserAvatar) navUserAvatar.src = avatarToUse;
+                if (sidebarAvatar) sidebarAvatar.src = avatarToUse;
+                if (mobileProfileAvatar) mobileProfileAvatar.src = avatarToUse;
+
+            } catch (error) {
+                console.error('Error loading user info:', error);
+            }
+        }
+
+        // Load tutors from Supabase
+        async function loadTutors() {
+            try {
+                console.log('🔍 Loading tutors from database...');
+
+                // Try to load tutors with error handling
+                const { data, error } = await supabase
+                    .from('tutors')
+                    .select('*')
+                    .eq('approved', true)
+                    .order('rating', { ascending: false });
+
+                if (error) {
+                    console.error('❌ Database error loading tutors:', error);
+
+                    // Try a simpler query without the approved filter
+                    console.log('🔄 Trying simpler query...');
+                    const { data: allData, error: simpleError } = await supabase
+                        .from('tutors')
+                        .select('*')
+                        .limit(10);
+
+                    if (simpleError) {
+                        throw simpleError;
+                    }
+
+                    // Filter approved tutors client-side
+                    allTutors = (allData || []).filter(tutor => tutor.approved === true);
+                    console.log('✅ Loaded tutors with fallback method:', allTutors.length);
+                } else {
+                    allTutors = data || [];
+                    console.log('✅ Loaded tutors successfully:', allTutors.length);
+                }
+
+                filteredTutors = [...allTutors];
+                renderTutors();
+                updateTutorCount();
+
+            } catch (error) {
+                console.error('❌ Error loading tutors:', error);
+
+                // Show user-friendly error message
+                showError(`Failed to load tutors: ${error.message}. Please refresh the page or try again later.`);
+
+                // Show empty state
+                allTutors = [];
+                filteredTutors = [];
+                renderTutors();
+                updateTutorCount();
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Render tutors
+        function renderTutors() {
+            if (filteredTutors.length === 0) {
+                showNoResults();
+                return;
+            }
+
+            hideNoResults();
+            tutorsGrid.innerHTML = '';
+
+            filteredTutors.forEach(tutor => {
+                const tutorCard = createTutorCard(tutor);
+                tutorsGrid.appendChild(tutorCard);
+            });
+
+            tutorsGrid.classList.remove('hidden');
+        }
+
+        // Create tutor card
+        function createTutorCard(tutor) {
+            const card = document.createElement('div');
+            card.className = 'bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:-translate-y-1';
+
+            const avatarUrl = tutor.photo_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(tutor.name)}&background=6366f1&color=fff&size=80`;
+            const languages = tutor.languages_spoken && tutor.languages_spoken.length > 0 ?
+                (typeof tutor.languages_spoken === 'string' ? JSON.parse(tutor.languages_spoken) : tutor.languages_spoken) :
+                [{ language: tutor.native_language || tutor.language, proficiency: 'Native' }];
+            const tags = tutor.tags && tutor.tags.length > 0 ?
+                (typeof tutor.tags === 'string' ? JSON.parse(tutor.tags) : tutor.tags) :
+                ['Conversational', 'Grammar'];
+            const countryFlag = tutor.country_flag || '🇮🇳';
+            const totalStudents = tutor.total_students || Math.floor(Math.random() * 50 + 10);
+            const totalLessons = tutor.total_lessons || Math.floor(Math.random() * 200 + 50);
+            const isProfessional = tutor.is_professional || false;
+            const rating = tutor.rating || 4.5;
+            const ratingStars = '⭐'.repeat(Math.floor(rating));
+
+            card.innerHTML = `
+                <div class="p-6">
+                    <!-- Horizontal Layout -->
+                    <div class="flex items-start space-x-4">
+                        <!-- Left: Avatar and Video Thumbnail -->
+                        <div class="flex-shrink-0">
+                            <div class="relative">
+                                <img src="${avatarUrl}" alt="${tutor.name}" class="w-20 h-20 rounded-full object-cover border-2 border-gray-100">
+                                ${tutor.video_url ? `
+                                    <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M8 5v10l8-5-8-5z"/>
+                                        </svg>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+
+                        <!-- Right: Content -->
+                        <div class="flex-1 min-w-0">
+                            <!-- Header -->
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <h3 class="text-lg font-semibold text-gray-900 truncate">${tutor.name}</h3>
+                                        <span class="text-lg">${countryFlag}</span>
+                                        ${isProfessional ? '<span class="text-xs px-2 py-1 rounded-full text-white" style="background-color: #4A5568;">Professional</span>' : ''}
+                                    </div>
+                                    <p class="text-sm text-gray-600">${tutor.bio_headline || `${tutor.native_language || tutor.language} Teacher`}</p>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-xl font-bold" style="color: #00C2B3;">₹${tutor.rate}</div>
+                                    <div class="text-xs text-gray-500">per lesson</div>
+                                </div>
+                            </div>
+
+                            <!-- Language Badges -->
+                            <div class="flex flex-wrap gap-1 mb-3">
+                                <span class="text-xs px-2 py-1 rounded-full text-white" style="background-color: #00C2B3;">${tutor.native_language || tutor.language}</span>
+                                ${languages.slice(0, 2).map((lang, index) => {
+                                    const colors = ['#6B7280', '#4A5568'];
+                                    const bgColor = colors[index % colors.length];
+                                    return `<span class="text-xs px-2 py-1 rounded-full text-white" style="background-color: ${bgColor};">${lang.language}</span>`;
+                                }).join('')}
+                                ${languages.length > 2 ? `<span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">+${languages.length - 2}</span>` : ''}
+                            </div>
+
+                            <!-- Stats -->
+                            <div class="flex items-center space-x-4 mb-3 text-sm text-gray-600">
+                                <div class="flex items-center space-x-1">
+                                    <span class="text-yellow-500">${ratingStars}</span>
+                                    <span class="font-medium">${rating.toFixed(1)}</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                                    </svg>
+                                    <span>${totalStudents} students</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                    </svg>
+                                    <span>${totalLessons} lessons</span>
+                                </div>
+                            </div>
+
+                            <!-- Tags -->
+                            ${tags.length > 0 ? `
+                                <div class="flex flex-wrap gap-1 mb-4">
+                                    ${tags.slice(0, 2).map((tag, index) => {
+                                        const tagColors = ['#E2E8F0', '#F1F5F9'];
+                                        const textColors = ['#4A5568', '#2D3748'];
+                                        const bgColor = tagColors[index % tagColors.length];
+                                        const textColor = textColors[index % textColors.length];
+                                        return `<span class="text-xs px-2 py-1 rounded-full" style="background-color: ${bgColor}; color: ${textColor};">${tag}</span>`;
+                                    }).join('')}
+                                    ${tags.length > 2 ? `<span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">+${tags.length - 2}</span>` : ''}
+                                </div>
+                            ` : ''}
+
+                            <!-- Action Buttons -->
+                            <div class="flex space-x-2">
+                                <button onclick="event.stopPropagation(); contactTeacher('${tutor.user_id}', '${tutor.name}')"
+                                        class="flex-1 text-white px-3 py-2 rounded-lg transition-colors text-sm"
+                                        style="background-color: #00C2B3;"
+                                        onmouseover="this.style.backgroundColor='#00A89B'"
+                                        onmouseout="this.style.backgroundColor='#00C2B3'">
+                                    Contact
+                                </button>
+                                <button onclick="event.stopPropagation(); window.open('profile.html?id=${tutor.id}', '_blank')"
+                                        class="flex-1 text-white px-3 py-2 rounded-lg transition-colors text-sm"
+                                        style="background-color: #059669;"
+                                        onmouseover="this.style.backgroundColor='#047857'"
+                                        onmouseout="this.style.backgroundColor='#059669'">
+                                    Book Lesson
+                                </button>
+                                <button onclick="event.stopPropagation(); window.open('profile.html?id=${tutor.id}', '_blank')"
+                                        class="px-3 py-2 border text-sm rounded-lg transition-colors"
+                                        style="border-color: #D1D5DB; color: #6B7280;"
+                                        onmouseover="this.style.backgroundColor='#F9FAFB'; this.style.borderColor='#9CA3AF'"
+                                        onmouseout="this.style.backgroundColor='transparent'; this.style.borderColor='#D1D5DB'">
+                                    Profile
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Add click handler for the entire card
+            card.addEventListener('click', (e) => {
+                if (!e.target.closest('button')) {
+                    window.open(`profile.html?id=${tutor.id}`, '_blank');
+                }
+            });
+
+            return card;
+        }
+
+        // Filter tutors
+        function filterTutors() {
+            const language = languageFilter.value;
+            const priceRange = priceFilter.value;
+            const searchTerm = searchInput.value.toLowerCase();
+
+            filteredTutors = allTutors.filter(tutor => {
+                // Language filter - check native_language or language field
+                if (language && (tutor.native_language || tutor.language) !== language) return false;
+
+                // Price filter
+                if (priceRange) {
+                    const rate = tutor.rate;
+                    if (priceRange === '0-300' && (rate < 0 || rate > 300)) return false;
+                    if (priceRange === '300-500' && (rate < 300 || rate > 500)) return false;
+                    if (priceRange === '500-800' && (rate < 500 || rate > 800)) return false;
+                    if (priceRange === '800-1200' && (rate < 800 || rate > 1200)) return false;
+                    if (priceRange === '1200+' && rate < 1200) return false;
+                }
+
+                // Search filter - search in name and bio
+                if (searchTerm) {
+                    const searchableText = `${tutor.name} ${tutor.bio || ''} ${tutor.bio_headline || ''}`.toLowerCase();
+                    if (!searchableText.includes(searchTerm)) return false;
+                }
+
+                return true;
+            });
+
+            renderTutors();
+            updateTutorCount();
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Filter change events
+            languageFilter.addEventListener('change', filterTutors);
+            priceFilter.addEventListener('change', filterTutors);
+
+            // Search with debounce
+            let searchTimeout;
+            const handleSearch = () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(filterTutors, 300);
+            };
+
+            searchInput.addEventListener('input', handleSearch);
+            navSearch.addEventListener('input', (e) => {
+                searchInput.value = e.target.value;
+                handleSearch();
+            });
+
+            // Clear filters
+            clearFilters.addEventListener('click', () => {
+                languageFilter.value = '';
+                priceFilter.value = '';
+                searchInput.value = '';
+                navSearch.value = '';
+                filteredTutors = [...allTutors];
+                renderTutors();
+                updateTutorCount();
+            });
+
+            // User dropdown toggle
+            const userMenuButton = document.getElementById('userMenuButton');
+            const userDropdownMenu = document.getElementById('userDropdownMenu');
+
+            userMenuButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                userDropdownMenu.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', () => {
+                userDropdownMenu.classList.add('hidden');
+            });
+        }
+
+        // Utility functions
+        function updateTutorCount() {
+            tutorCount.textContent = filteredTutors.length;
+        }
+
+        function hideLoading() {
+            loadingState.classList.add('hidden');
+        }
+
+        function showNoResults() {
+            tutorsGrid.classList.add('hidden');
+            noResults.classList.remove('hidden');
+        }
+
+        function hideNoResults() {
+            noResults.classList.add('hidden');
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            errorDiv.textContent = message;
+            document.body.appendChild(errorDiv);
+
+            setTimeout(() => {
+                document.body.removeChild(errorDiv);
+            }, 5000);
+        }
+
+        // Mobile Sidebar Functionality
+        function initializeMobileSidebar() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileSidebar = document.getElementById('mobileSidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+            if (mobileMenuBtn && mobileSidebar && sidebarOverlay) {
+                // Open sidebar
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileSidebar.classList.add('active');
+                    sidebarOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+
+                // Close sidebar when clicking overlay
+                sidebarOverlay.addEventListener('click', function() {
+                    closeMobileSidebar();
+                });
+
+                // Close sidebar when clicking a link (except logout)
+                const sidebarLinks = mobileSidebar.querySelectorAll('.sidebar-link:not(.logout-link)');
+                sidebarLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        closeMobileSidebar();
+                    });
+                });
+            }
+        }
+
+        function closeMobileSidebar() {
+            const mobileSidebar = document.getElementById('mobileSidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+            if (mobileSidebar && sidebarOverlay) {
+                mobileSidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Contact teacher function
+        async function contactTeacher(tutorUserId, tutorName) {
+            try {
+                // Check if user is authenticated
+                const { data: { session } } = await supabase.auth.getSession();
+                if (!session) {
+                    alert('Please log in to contact teachers');
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                // Initialize messaging service
+                const messaging = new SimpleMessaging(supabase);
+                await messaging.initialize();
+
+                // Get or create chat
+                const chatId = await messaging.getOrCreateChat(tutorUserId);
+
+                // Redirect to student messages page
+                window.location.href = `student-messages.html?chat=${chatId}`;
+
+            } catch (error) {
+                console.error('Error contacting teacher:', error);
+                alert('Failed to start conversation. Please try again.');
+            }
+        }
+
+        // Logout function
+        async function handleLogout() {
+            try {
+                const { error } = await supabase.auth.signOut();
+                if (error) throw error;
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                showError('Failed to logout. Please try again.');
+            }
+        }
+
+        // Make functions globally available
+        window.handleLogout = handleLogout;
+        window.contactTeacher = contactTeacher;
+    </script>
+
+    <!-- Simple Messaging Service -->
+    <script src="simple-messaging.js?v=14&t=20250614-refined-design"></script>
+</body>
+</html>

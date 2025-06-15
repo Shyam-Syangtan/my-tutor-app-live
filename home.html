@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - IndianTutors</title>
+    <meta name="description" content="Your personalized language learning dashboard">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="responsive-global.css?v=12&t=20250614-critical-fix">
+    <link rel="stylesheet" href="styles.css?v=12&t=20250614-critical-fix">
+    <link rel="stylesheet" href="home-styles.css?v=12&t=20250614-critical-fix">
+</head>
+<body>
+    <!-- Mobile Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Mobile Sidebar -->
+    <nav class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-profile">
+                <img src="" alt="Profile" class="sidebar-avatar" id="sidebarAvatar">
+                <div class="sidebar-user-info">
+                    <span class="sidebar-name" id="sidebarName">Loading...</span>
+                    <span class="sidebar-email" id="sidebarEmail">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-content">
+            <div class="sidebar-section">
+                <a href="findteacher.html" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    Find a Teacher
+                </a>
+                <a href="#group-class" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    Group Class
+                </a>
+                <a href="#trial" class="sidebar-link trial-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    <span>Start 30-Day Free Trial</span>
+                    <span class="trial-badge">Plus</span>
+                </a>
+                <a href="#community" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                    Community
+                </a>
+                <a href="student-messages.html" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    Messages
+                </a>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <div class="sidebar-section">
+                <a href="#lessons" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    My Lessons
+                </a>
+                <a href="#teachers" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    My Teachers
+                </a>
+                <a href="#tests" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14,2 14,8 20,8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10,9 9,9 8,9"></polyline>
+                    </svg>
+                    My Tests
+                </a>
+                <a href="#quizzes" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    My Quizzes
+                </a>
+                <a href="#wallet" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="1" y="3" width="15" height="13"></rect>
+                        <polygon points="16,8 20,8 23,11 23,16 16,16"></polygon>
+                        <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                        <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                    </svg>
+                    My Wallet
+                </a>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <div class="sidebar-section">
+                <a href="#profile" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    My Profile
+                </a>
+                <a href="#settings" class="sidebar-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    Settings
+                </a>
+                <div id="mobileTutorToggleContainer"></div>
+                <button class="sidebar-link logout-link" onclick="handleLogout()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16,17 21,12 16,7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Desktop/Tablet Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <img src="" alt="Profile" class="mobile-profile-avatar" id="mobileProfileAvatar">
+            </button>
+
+            <div class="nav-logo">
+                <h2>IndianTutors</h2>
+            </div>
+
+            <div class="nav-links">
+                <a href="home.html" class="nav-link active">Home</a>
+                <a href="findteacher.html" class="nav-link">Find a Teacher</a>
+                <a href="student-messages.html" class="nav-link">Messages</a>
+                <div class="nav-dropdown">
+                    <button class="nav-dropdown-btn">
+                        More
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="nav-dropdown-content">
+                        <a href="#lessons">My Lessons</a>
+                        <a href="#teachers">My Teachers</a>
+                        <a href="#tests">My Tests</a>
+                        <a href="#quizzes">My Quizzes</a>
+                        <a href="#calendar">My Calendar</a>
+                        <a href="#wallet">My Wallet</a>
+                    </div>
+                </div>
+                <div class="profile-dropdown">
+                    <button class="profile-btn" id="profileBtn">
+                        <img src="" alt="Profile" class="profile-avatar" id="profileAvatar">
+                        <span class="profile-name" id="profileName">Loading...</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="profile-dropdown-content">
+                        <div class="profile-info">
+                            <img src="" alt="Profile" class="dropdown-avatar" id="dropdownAvatar">
+                            <div class="dropdown-user-info">
+                                <span class="dropdown-name" id="dropdownName">Loading...</span>
+                                <span class="dropdown-email" id="dropdownEmail">Loading...</span>
+                            </div>
+                        </div>
+                        <hr class="dropdown-divider">
+                        <a href="student-lessons.html">My Lessons</a>
+                        <a href="#profile">My Profile</a>
+                        <a href="#settings">Settings</a>
+                        <div id="tutorToggleContainer"></div>
+                        <button class="logout-btn" onclick="handleLogout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="dashboard-container">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <h1 class="welcome-title">Welcome back, <span id="welcomeName">Student</span>!</h1>
+                <p class="welcome-subtitle">Continue your language learning journey</p>
+            </section>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Profile Card -->
+                <div class="dashboard-card profile-card">
+                    <div class="card-header">
+                        <h3>Your Progress</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="profile-info-card">
+                            <img src="" alt="Profile" class="card-avatar" id="cardAvatar">
+                            <div class="profile-details">
+                                <h4 id="cardName">Loading...</h4>
+                                <div class="profile-stats">
+                                    <div class="stat">
+                                        <span class="stat-value">7</span>
+                                        <span class="stat-label">Week streak</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-value">24</span>
+                                        <span class="stat-label">Total hours</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-value">85</span>
+                                        <span class="stat-label">Knowledge score</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Lessons Card -->
+                <div class="dashboard-card lessons-card">
+                    <div class="card-header">
+                        <h3>Upcoming Lessons</h3>
+                        <a href="#lessons" class="view-all-link">View all</a>
+                    </div>
+                    <div class="card-content">
+                        <div class="lesson-item">
+                            <div class="lesson-time">
+                                <span class="lesson-date">June 12</span>
+                                <span class="lesson-hour">16:30</span>
+                            </div>
+                            <div class="lesson-details">
+                                <span class="lesson-language">Hindi</span>
+                                <span class="lesson-duration">60 min</span>
+                            </div>
+                            <button class="lesson-join-btn">Join</button>
+                        </div>
+                        <div class="lesson-item">
+                            <div class="lesson-time">
+                                <span class="lesson-date">June 14</span>
+                                <span class="lesson-hour">18:00</span>
+                            </div>
+                            <div class="lesson-details">
+                                <span class="lesson-language">Tamil</span>
+                                <span class="lesson-duration">45 min</span>
+                            </div>
+                            <button class="lesson-join-btn">Join</button>
+                        </div>
+                        <div class="no-lessons" style="display: none;">
+                            <p>No upcoming lessons</p>
+                            <a href="#teachers" class="book-lesson-btn">Book a lesson</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Teachers Section -->
+            <section class="teachers-section">
+                <div class="section-header">
+                    <h2>My Teachers</h2>
+                    <a href="#teachers" class="view-all-link">View all</a>
+                </div>
+                <div class="teachers-grid">
+                    <div class="teacher-card">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Teacher" class="teacher-avatar">
+                        <div class="teacher-info">
+                            <h4 class="teacher-name">Rajesh Kumar</h4>
+                            <p class="teacher-language">Hindi Teacher</p>
+                            <div class="teacher-rating">
+                                <span class="rating">4.9</span>
+                                <div class="stars">★★★★★</div>
+                            </div>
+                            <p class="teacher-rate">₹500/hour</p>
+                        </div>
+                        <button class="book-btn">Book</button>
+                    </div>
+                    
+                    <div class="teacher-card">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face" alt="Teacher" class="teacher-avatar">
+                        <div class="teacher-info">
+                            <h4 class="teacher-name">Priya Sharma</h4>
+                            <p class="teacher-language">Tamil Teacher</p>
+                            <div class="teacher-rating">
+                                <span class="rating">4.8</span>
+                                <div class="stars">★★★★★</div>
+                            </div>
+                            <p class="teacher-rate">₹450/hour</p>
+                        </div>
+                        <button class="book-btn">Book</button>
+                    </div>
+                    
+                    <div class="teacher-card">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Teacher" class="teacher-avatar">
+                        <div class="teacher-info">
+                            <h4 class="teacher-name">Amit Patel</h4>
+                            <p class="teacher-language">Bengali Teacher</p>
+                            <div class="teacher-rating">
+                                <span class="rating">4.7</span>
+                                <div class="stars">★★★★★</div>
+                            </div>
+                            <p class="teacher-rate">₹400/hour</p>
+                        </div>
+                        <button class="book-btn">Book</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Authentication Check Script -->
+    <script>
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://sprlwkfpreajsodowyrs.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNwcmx3a2ZwcmVhanNvZG93eXJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk5Njc4NjIsImV4cCI6MjA2NTU0Mzg2Mn0.9asEwbT40SPv_FBxUqm_7ON2CCuRZc2iEmDRiYK5n8k';
+
+        let supabase = null;
+        let currentUser = null;
+
+        // Initialize when page loads
+        window.addEventListener('load', function() {
+            initializeSupabase();
+        });
+
+        function initializeSupabase() {
+            if (typeof window.supabase !== 'undefined') {
+                if (SUPABASE_URL === 'YOUR_SUPABASE_URL_HERE' || SUPABASE_ANON_KEY === 'YOUR_SUPABASE_ANON_KEY_HERE') {
+                    console.error('Supabase credentials not configured');
+                    showErrorMessage('Authentication not configured. Redirecting to login...');
+                    setTimeout(() => window.location.href = 'index.html', 2000);
+                    return;
+                }
+
+                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                console.log('Supabase initialized successfully');
+
+                // Check authentication and get user
+                checkAuthentication();
+
+                // Listen for auth changes
+                supabase.auth.onAuthStateChange((event, session) => {
+                    console.log('Auth state changed:', event, session);
+                    if (event === 'SIGNED_OUT' || !session) {
+                        window.location.href = 'index.html';
+                    } else if (event === 'SIGNED_IN' && session) {
+                        currentUser = session.user;
+                        displayUserInfo(session.user);
+                        checkTutorStatus(session.user);
+                    }
+                });
+            } else {
+                console.error('Supabase library not loaded');
+                setTimeout(initializeSupabase, 1000);
+            }
+        }
+
+        async function checkAuthentication() {
+            if (!supabase) return;
+
+            const { data: { session }, error } = await supabase.auth.getSession();
+
+            if (error) {
+                console.error('Auth check error:', error);
+                window.location.href = 'index.html';
+                return;
+            }
+
+            if (!session) {
+                console.log('No active session, redirecting to login');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            currentUser = session.user;
+            displayUserInfo(session.user);
+            checkTutorStatus(session.user);
+            console.log('User authenticated:', session.user.email);
+        }
+
+        async function displayUserInfo(user) {
+            console.log('Displaying user info:', user);
+
+            try {
+                // Fetch user data from students table
+                const { data: studentData, error } = await supabase
+                    .from('students')
+                    .select('*')
+                    .eq('id', user.id)
+                    .single();
+
+                if (error) {
+                    console.error('Error fetching student data:', error);
+                    // Fallback to auth metadata
+                    displayUserInfoFallback(user);
+                    return;
+                }
+
+                console.log('Student data from database:', studentData);
+
+                // Extract user information from database
+                const userName = studentData.name || user.email.split('@')[0];
+                const userEmail = studentData.email || user.email;
+                const avatarUrl = studentData.profile_picture || '';
+
+                updateUserInterface(userName, userEmail, avatarUrl);
+
+            } catch (error) {
+                console.error('Error in displayUserInfo:', error);
+                displayUserInfoFallback(user);
+            }
+        }
+
+        function displayUserInfoFallback(user) {
+            console.log('Using fallback user info display');
+
+            // Extract user information from auth metadata
+            const userName = user.user_metadata?.full_name || user.email.split('@')[0];
+            const userEmail = user.email;
+            const avatarUrl = user.user_metadata?.avatar_url || '';
+
+            updateUserInterface(userName, userEmail, avatarUrl);
+        }
+
+        function updateUserInterface(userName, userEmail, avatarUrl) {
+            // Update welcome message
+            const welcomeNameElement = document.getElementById('welcomeName');
+            if (welcomeNameElement) {
+                welcomeNameElement.textContent = userName;
+            }
+
+            // Update profile dropdown elements
+            const profileName = document.getElementById('profileName');
+            const profileAvatar = document.getElementById('profileAvatar');
+            const dropdownName = document.getElementById('dropdownName');
+            const dropdownEmail = document.getElementById('dropdownEmail');
+            const dropdownAvatar = document.getElementById('dropdownAvatar');
+
+            // Update mobile sidebar elements
+            const sidebarName = document.getElementById('sidebarName');
+            const sidebarEmail = document.getElementById('sidebarEmail');
+            const sidebarAvatar = document.getElementById('sidebarAvatar');
+            const mobileProfileAvatar = document.getElementById('mobileProfileAvatar');
+
+            if (profileName) profileName.textContent = userName;
+            if (dropdownName) dropdownName.textContent = userName;
+            if (dropdownEmail) dropdownEmail.textContent = userEmail;
+            if (sidebarName) sidebarName.textContent = userName;
+            if (sidebarEmail) sidebarEmail.textContent = userEmail;
+
+            // Update avatars
+            const defaultAvatar40 = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=6366f1&color=fff&size=40`;
+            const defaultAvatar60 = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=6366f1&color=fff&size=60`;
+            const avatarToUse = avatarUrl || defaultAvatar40;
+
+            if (profileAvatar) {
+                profileAvatar.src = avatarToUse;
+                profileAvatar.alt = userName;
+            }
+            if (dropdownAvatar) {
+                dropdownAvatar.src = avatarToUse;
+                dropdownAvatar.alt = userName;
+            }
+            if (sidebarAvatar) {
+                sidebarAvatar.src = avatarToUse;
+                sidebarAvatar.alt = userName;
+            }
+            if (mobileProfileAvatar) {
+                mobileProfileAvatar.src = avatarToUse;
+                mobileProfileAvatar.alt = userName;
+            }
+
+            // Update profile card elements
+            const cardName = document.getElementById('cardName');
+            const cardAvatar = document.getElementById('cardAvatar');
+
+            if (cardName) cardName.textContent = userName;
+            if (cardAvatar) {
+                cardAvatar.src = avatarUrl || defaultAvatar60;
+                cardAvatar.alt = userName;
+            }
+
+            console.log('UI updated with:', { userName, userEmail, avatarUrl });
+        }
+
+        // Check if user is an approved tutor and update toggle
+        async function checkTutorStatus(user) {
+            try {
+                const { data: tutorData, error } = await supabase
+                    .from('tutors')
+                    .select('*')
+                    .eq('user_id', user.id)
+                    .single();
+
+                if (error && error.code !== 'PGRST116') {
+                    console.error('Error checking tutor status:', error);
+                    updateTutorToggle(false, null);
+                    return;
+                }
+
+                if (tutorData) {
+                    console.log('Tutor data found:', tutorData);
+                    updateTutorToggle(tutorData.approved, tutorData);
+                } else {
+                    console.log('No tutor data found');
+                    updateTutorToggle(false, null);
+                }
+            } catch (error) {
+                console.error('Error in checkTutorStatus:', error);
+                updateTutorToggle(false, null);
+            }
+        }
+
+        // Update the tutor toggle based on status
+        function updateTutorToggle(isApprovedTutor, tutorData) {
+            const desktopContainer = document.getElementById('tutorToggleContainer');
+            const mobileContainer = document.getElementById('mobileTutorToggleContainer');
+
+            if (isApprovedTutor) {
+                // User is an approved tutor - show "Switch to Teacher Mode"
+                const toggleHTML = `
+                    <a href="tutor-dashboard.html" style="color: var(--primary-color); font-weight: 500;">
+                        🎓 Switch to Teacher Mode
+                    </a>
+                `;
+                const mobileToggleHTML = `
+                    <a href="tutor-dashboard.html" class="sidebar-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                        </svg>
+                        Switch to Teacher Mode
+                    </a>
+                `;
+
+                if (desktopContainer) desktopContainer.innerHTML = toggleHTML;
+                if (mobileContainer) mobileContainer.innerHTML = mobileToggleHTML;
+            } else if (tutorData && !tutorData.approved) {
+                // User has applied but not approved yet
+                const toggleHTML = `
+                    <a href="#" onclick="showApplicationStatus()" style="color: #f59e0b; font-weight: 500;">
+                        ⏳ Application Pending
+                    </a>
+                `;
+                const mobileToggleHTML = `
+                    <a href="#" onclick="showApplicationStatus()" class="sidebar-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                        Application Pending
+                    </a>
+                `;
+
+                if (desktopContainer) desktopContainer.innerHTML = toggleHTML;
+                if (mobileContainer) mobileContainer.innerHTML = mobileToggleHTML;
+            } else {
+                // User is not a tutor - show "Become a Tutor"
+                const toggleHTML = `
+                    <a href="become-tutor-info.html" style="color: var(--primary-color); font-weight: 500;">
+                        🎓 Become a Tutor
+                    </a>
+                `;
+                const mobileToggleHTML = `
+                    <a href="become-tutor-info.html" class="sidebar-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                        </svg>
+                        Become a Tutor
+                    </a>
+                `;
+
+                if (desktopContainer) desktopContainer.innerHTML = toggleHTML;
+                if (mobileContainer) mobileContainer.innerHTML = mobileToggleHTML;
+            }
+        }
+
+        // Show application status modal
+        function showApplicationStatus() {
+            alert('Your tutor application is currently under review. We\'ll notify you once it\'s approved!');
+        }
+
+        async function logout() {
+            if (!supabase) return;
+
+            const { error } = await supabase.auth.signOut();
+            if (error) {
+                console.error('Logout error:', error);
+                showErrorMessage('Logout failed: ' + error.message);
+            } else {
+                console.log('User logged out successfully');
+                window.location.href = 'index.html';
+            }
+        }
+
+        function showErrorMessage(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #DC2626;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                z-index: 10000;
+                font-family: Inter, sans-serif;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            `;
+            errorDiv.textContent = message;
+            document.body.appendChild(errorDiv);
+
+            setTimeout(() => {
+                if (document.body.contains(errorDiv)) {
+                    document.body.removeChild(errorDiv);
+                }
+            }, 5000);
+        }
+
+        // Mobile Sidebar Functionality
+        function initializeMobileSidebar() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileSidebar = document.getElementById('mobileSidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+            if (mobileMenuBtn && mobileSidebar && sidebarOverlay) {
+                // Open sidebar
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileSidebar.classList.add('active');
+                    sidebarOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+
+                // Close sidebar when clicking overlay
+                sidebarOverlay.addEventListener('click', function() {
+                    closeMobileSidebar();
+                });
+
+                // Close sidebar when clicking a link (except logout)
+                const sidebarLinks = mobileSidebar.querySelectorAll('.sidebar-link:not(.logout-link)');
+                sidebarLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        closeMobileSidebar();
+                    });
+                });
+            }
+        }
+
+        function closeMobileSidebar() {
+            const mobileSidebar = document.getElementById('mobileSidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+            if (mobileSidebar && sidebarOverlay) {
+                mobileSidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Initialize mobile sidebar when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMobileSidebar();
+        });
+
+        // Make functions globally available
+        window.logout = logout;
+        window.handleLogout = logout;
+        window.showApplicationStatus = showApplicationStatus;
+    </script>
+
+    <!-- Home Page Script -->
+    <script type="module" src="home-script.js"></script>
+</body>
+</html>
