@@ -13,7 +13,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && gh-pages -d dist -r https://github.com/Shyam-Syangtan/my-tutor-app-live.git",
+    "deploy": "npm run build && gh-pages -d dist -r https://github.com/Shyam-Syangtan/my-tutor-app-live.git --cname shyamsyangtan.com",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

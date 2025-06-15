@@ -37,7 +37,7 @@ class AuthHandler {
             const { data, error } = await this.supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: window.location.origin + '/my-tutor-app-live/home.html',
+                    redirectTo: window.location.origin + '/home.html',
                     queryParams: {
                         access_type: 'offline',
                         prompt: 'consent',
